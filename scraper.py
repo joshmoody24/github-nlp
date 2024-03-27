@@ -24,7 +24,7 @@ REPOS_TO_SCRAPE = [
     ('bigskysoftware', 'htmx'),             # htmx
     ('phoenixframework', 'phoenix'),        # Phoenix
     ('ethereum', 'go-ethereum'),            # Ethereum
-    ('godotengine', 'godot'),               # Godot
+    # ('godotengine', 'godot'),             # Godot (too large)
     # ('blender', 'blender'),               # Blender (doesn't have issues)
     # ('django', 'django'),                 # Django (doesn't have issues)
 ]
