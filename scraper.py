@@ -42,8 +42,12 @@ headers = {
     'Authorization': f'Bearer {os.getenv("GH_TOKEN")}',
 }
 
+def get_sleep_time(last_request_time):
+    return max(0, REQUEST_DELAY - (time.time() - last_request_time)), time.time()
+
 def extract_text_from_repo_issues(repo_owner, repo_name):
     issue_url = f'https://api.github.com/repos/{repo_owner}/{repo_name}/issues?per_page={PAGE_SIZE}'
+    last_request_time = time.time()
     first_page = requests.get(issue_url, headers=headers)
     first_page_link = first_page.headers.get('link', '')
     last_page_num = int(re.search(LAST_PAGE_REGEX, first_page_link).group(1)) if 'rel="last"' in first_page_link else 1
@@ -53,7 +57,8 @@ def extract_text_from_repo_issues(repo_owner, repo_name):
     with tqdm.tqdm(total=total_issues) as pbar:
         pbar.set_description(f'Scraping {repo_name} issues')
         while has_more_issues:
-            time.sleep(REQUEST_DELAY)
+            sleep_seconds, last_request_time = get_sleep_time(last_request_time)
+            time.sleep(sleep_seconds)
             response = requests.get(issue_url, headers=headers)
             issues = response.json()
             
@@ -71,7 +76,8 @@ def extract_text_from_repo_issues(repo_owner, repo_name):
                 comments_url = issue['comments_url'] + f'?per_page={PAGE_SIZE}'
                 has_more_comments = True
                 while has_more_comments:
-                    time.sleep(REQUEST_DELAY)
+                    sleep_seconds, last_request_time = get_sleep_time(last_request_time)
+                    time.sleep(sleep_seconds)
                     comments_response = requests.get(comments_url, headers=headers)
                     comments = comments_response.json()
                     for comment in comments:
