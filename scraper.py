@@ -68,6 +68,7 @@ def extract_text_from_repo_issues(repo_owner, repo_name):
                     continue
                 if issue['body']:
                     issue_rows.append({
+                        'issue_id': issue['id'],
                         'timestamp': issue['created_at'],
                         'type': 'issue_body',
                         'text': issue['body'],
@@ -86,10 +87,11 @@ def extract_text_from_repo_issues(repo_owner, repo_name):
                             continue
                         if comment['body']:
                             issue_rows.append({
+                                'issue_id': issue['id'],
                                 'timestamp': comment['created_at'],
                                 'type': 'issue_comment',
                                 'text': comment['body'],
-                                'status': '',
+                                'status': issue['state'],
                             })
                     if 'rel="next"' in comments_response.headers.get('link', ''):
                         next_url = re.search(NEXT_REGEX, comments_response.headers['link']).group(0)
