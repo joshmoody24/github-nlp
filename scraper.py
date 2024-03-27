@@ -108,7 +108,7 @@ def extract_text_from_repo_issues(repo_owner, repo_name):
                 has_more_issues = False
 
     import csv
-    with open(f'{repo_name}_issues.csv', 'w', newline='', encoding='utf-8') as f:
+    with open(f'./data/{repo_name}_issues.csv', 'w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=['timestamp', 'type', 'status', 'text'])
         writer.writeheader()
         writer.writerows(issue_rows)
