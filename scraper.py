@@ -46,10 +46,10 @@ def extract_text_from_repo_issues(repo_owner, repo_name):
     issue_url = f'https://api.github.com/repos/{repo_owner}/{repo_name}/issues?per_page={PAGE_SIZE}'
     first_page = requests.get(issue_url, headers=headers)
     first_page_link = first_page.headers.get('link', '')
-    last_page_num = re.search(LAST_PAGE_REGEX, first_page_link).group(1) if 'rel="last"' in first_page_link else 1
+    last_page_num = int(re.search(LAST_PAGE_REGEX, first_page_link).group(1)) if 'rel="last"' in first_page_link else 1
     issue_rows = []
     has_more_issues = True
-    total_issues = int(last_page_num) * PAGE_SIZE if last_page_num > 1 else len(first_page.json())
+    total_issues = last_page_num * PAGE_SIZE if last_page_num > 1 else len(first_page.json())
     with tqdm.tqdm(total=total_issues) as pbar:
         pbar.set_description(f'Scraping {repo_name} issues')
         while has_more_issues:
