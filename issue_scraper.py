@@ -15,6 +15,7 @@ REPOS_TO_SCRAPE = [
     ('Auto1111SDK', 'Auto1111SDK'),
     ('stitionai', 'devika'),
     ('zzzprojects', 'System.Linq.Dynamic.Core'),
+    ('elnormous', 'HTTPRequest'),
 
     # larger repos
     ('pallets', 'flask'),
