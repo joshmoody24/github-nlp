@@ -80,17 +80,27 @@ def is_source_code(file_path):
 def extract_comments(repo_owner, repo_name):
     repo = clone_repo(repo_owner, repo_name)
     csv_data = []
+
     for commit in tqdm.tqdm(repo.iter_commits(), desc='Extracting comments from commits'):
-        for obj in commit.tree.traverse():
-            if obj.type == 'blob' and is_source_code(obj.path):
-                code = obj.data_stream.read().decode('utf-8', errors='ignore')
-                file_ext = os.path.splitext(obj.path)[1]
-                patterns = COMMENT_PATTERNS.get(file_ext, [])
-                for pattern in patterns:
-                    matches = re.finditer(pattern, code, re.MULTILINE)
-                    for match in matches:
-                        group = match.group(1).strip()
-                        csv_data.append({'repo': repo.remotes.origin.url, 'date': commit.committed_datetime.isoformat(), 'comment': group})
+        if not commit.parents:
+            continue  # Skip initial commit as it has no parent to compare with
+        diff = commit.diff(commit.parents[0], create_patch=True)
+
+        for blob_diff in diff:
+            if blob_diff.b_path is None or not is_source_code(blob_diff.b_path):
+                continue
+
+            file_ext = os.path.splitext(blob_diff.b_path)[1]
+            patterns = COMMENT_PATTERNS.get(file_ext, [])
+
+            added_lines = [line[1:] for line in blob_diff.diff.decode('utf-8', errors='ignore').split('\n') if line.startswith('+')]
+            added_code = '\n'.join(added_lines)
+
+            for pattern in patterns:
+                matches = re.finditer(pattern, added_code, re.MULTILINE)
+                for match in matches:
+                    comment = match.group(1).strip()
+                    csv_data.append({'repo': f'{repo_owner}/{repo_name}', 'date': commit.committed_datetime.isoformat(), 'comment': comment})
 
     with open(f'./data/{repo_owner}_{repo_name}_comments.csv', 'w', newline='', encoding='utf-8') as csvfile:
         fieldnames = ['repo', 'date', 'comment']
