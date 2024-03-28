@@ -59,7 +59,7 @@ def interpolate_stars(row, star_history):
         star_diff = stars_after - stars_before
         interpolated_stars = stars_before + (star_diff * (days_diff / total_days_diff)) if total_days_diff != 0 else stars_before
 
-        return interpolated_stars
+        return round(interpolated_stars)
     else:
         closest = before if not before.empty else after
         return closest['Stars'].iloc[0] if not closest.empty else None
