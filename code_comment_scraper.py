@@ -5,35 +5,60 @@ import os
 import tqdm
 from issue_scraper import REPOS_TO_SCRAPE
 
-# Organize regex patterns by language
 COMMENT_PATTERNS = {
     '.py': [
-        r'^\s*#(.*)',       # Python comments
-        r'"""([\s\S]*?)"""',  # Python multiline strings
-        r"'''([\s\S]*?)'''"   # Python multiline strings
+        r'^\s*#(.*)',        # Python comments
+        r'"""([\s\S]*?)"""', # Python multiline strings
+        r"'''([\s\S]*?)'''"  # Python multiline strings
     ],
     '.c': [
-        r'//(.*)',            # C++/C#/Java/JavaScript style single-line comments
-        r'/\*([\s\S]*?)\*/'   # C style multiline comments
+        r'//(.*)',           # C/C++/C#/Java/JavaScript single-line comments
+        r'/\*([\s\S]*?)\*/'  # C multiline comments
     ],
     '.cpp': [
-        r'//(.*)',            # C++ single-line comments
-        r'/\*([\s\S]*?)\*/'   # C++ multiline comments
+        r'//(.*)',           # C++ single-line comments
+        r'/\*([\s\S]*?)\*/'  # C++ multiline comments
     ],
     '.cs': [
-        r'//(.*)',            # C# single-line comments
-        r'/\*([\s\S]*?)\*/'   # C# multiline comments
+        r'//(.*)',           # C# single-line comments
+        r'/\*([\s\S]*?)\*/'  # C# multiline comments
     ],
     '.js': [
-        r'//(.*)',            # JavaScript single-line comments
-        r'/\*([\s\S]*?)\*/'   # JavaScript multiline comments
+        r'//(.*)',           # JavaScript single-line comments
+        r'/\*([\s\S]*?)\*/'  # JavaScript multiline comments
     ],
     '.sh': [
-        r'^\s*#(.*)'          # Shell comments
+        r'^\s*#(.*)'         # Shell comments
     ],
     '.java': [
-        r'//(.*)',            # Java single-line comments
-        r'/\*([\s\S]*?)\*/'   # Java multiline comments
+        r'//(.*)',           # Java single-line comments
+        r'/\*([\s\S]*?)\*/'  # Java multiline comments
+    ],
+    '.ex': [
+        r'^\s*#(.*)'         # Elixir single-line comments
+    ],
+    '.exs': [
+        r'^\s*#(.*)'         # Elixir single-line comments
+    ],
+    '.go': [
+        r'//(.*)',           # Go single-line comments
+        r'/\*([\s\S]*?)\*/'  # Go multiline comments
+    ],
+    '.ts': [
+        r'//(.*)',           # TypeScript single-line comments
+        r'/\*([\s\S]*?)\*/'  # TypeScript multiline comments
+    ],
+    '.php': [
+        r'//(.*)',           # PHP single-line comments
+        r'/\*([\s\S]*?)\*/', # PHP multiline comments
+        r'^\s*#(.*)'         # PHP shell-style comments
+    ],
+    '.rb': [
+        r'^\s*#(.*)'         # Ruby single-line comments
+    ],
+    '.swift': [
+        r'//(.*)',           # Swift single-line comments
+        r'/\*([\s\S]*?)\*/'  # Swift multiline comments
     ]
 }
 
