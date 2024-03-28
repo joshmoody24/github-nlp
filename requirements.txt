@@ -2,5 +2,4 @@ requests
 tqdm
 python-dotenv
 GitPython
-polars
-numpy
+pandas

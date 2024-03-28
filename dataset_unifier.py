@@ -1,80 +1,58 @@
-import polars as pl
+import pandas as pd
 from issue_scraper import REPOS_TO_SCRAPE
 
-MAX_LENGTH = 2000
+MAX_LENGTH = 1000
 MIN_LENGTH = 5
 
 def load_and_combine(repo_owner, repo_name, data_path='./data'):
     issues_file = f"{data_path}/{repo_owner}_{repo_name}_issues.csv"
     comments_file = f"{data_path}/{repo_owner}_{repo_name}_comments.csv"
 
-    issues_df = pl.read_csv(issues_file)
-    comments_df = pl.read_csv(comments_file)
+    issues_df = pd.read_csv(issues_file)
+    comments_df = pd.read_csv(comments_file)
 
-    # Correctly rename and add columns in comments_df
-    comments_df = (comments_df
-                   .rename({'date': 'timestamp', 'comment': 'text'})
-                   .with_columns([
-                       pl.lit('code_comment').alias('type'),
-                       pl.lit(None).alias('status'),
-                       pl.lit(None).alias('issue_id')
-                   ]))
-    
-    issues_df = (issues_df.with_columns([pl.lit(f'{repo_owner}/{repo_name}').alias('repo')]))
+    comments_df = comments_df.rename(columns={'date': 'timestamp', 'comment': 'text'})
+    comments_df['type'] = 'code_comment'
+    comments_df['status'] = None
+    comments_df['issue_id'] = None
+    comments_df['repo'] = f'{repo_owner}/{repo_name}'
 
-    # Concatenate issues and comments
-    combined_df = pl.concat([issues_df, comments_df], how='diagonal')
+    combined_df = pd.concat([issues_df, comments_df], ignore_index=True)
 
     return combined_df
 
-# Combine data for all repositories
-all_data = pl.concat([
-    load_and_combine(repo_owner, repo_name)
-    for repo_owner, repo_name in REPOS_TO_SCRAPE
-], how='vertical')
+all_data = pd.concat([load_and_combine(repo_owner, repo_name) for repo_owner, repo_name in REPOS_TO_SCRAPE], ignore_index=True)
 
-# Filter out rows with text < 5 characters
-all_data = all_data.filter(pl.col('text').str.lengths() > MIN_LENGTH)
+all_data = all_data[all_data['text'].str.len() > MIN_LENGTH]
+all_data = all_data[all_data['text'].str.len() < MAX_LENGTH]
 
-# Now truncate text to 2000 characters in the combined dataset
-all_data = all_data.with_columns([
-    pl.when(pl.col('text').str.lengths() > MAX_LENGTH)
-      .then(pl.col('text').str.slice(0, MAX_LENGTH))
-      .otherwise(pl.col('text'))
-      .alias('text')
-])
+print("Converting timestamp in all_data to datetime...")
+all_data['timestamp'] = pd.to_datetime(all_data['timestamp'], utc=True).dt.date
 
-# Load the star history data into Polars
-star_history_df = pl.read_csv("./github_star_history.csv")
+print("Loading star history data...")
+star_history_df = pd.read_csv("./github_star_history.csv")
 
-# Convert date columns to datetime, assuming the correct format is used
-all_data = all_data.with_columns([
-    pl.col('timestamp').str.replace("Z", "+00:00").str.strptime(pl.Datetime, '%Y-%m-%dT%H:%M:%S%z')
-])
-star_history_df = star_history_df.with_columns([
-    pl.col('Date')
-    .str.extract(r'(\w{3} \w{3} \d{2} \d{4})')
-    .alias('extracted_date')  # Alias the extracted column for clarity
-    .str.strptime(pl.Date, '%a %b %d %Y')
-    .alias('Date')  # Rename the column back to 'Date' or use a new name as needed
-])
+print("Converting Date in star_history_df to datetime...")
+for i, date_str in enumerate(star_history_df['Date']):
+    try:
+        star_history_df.loc[i, 'Date'] = pd.to_datetime(date_str).date()
+    except Exception as e:
+        print(f"Error converting {date_str} to date: {e}")
 
-import datetime
-
-def interpolate_stars(repo, timestamp_date, star_history):
-    # Ensure repo_star_history Date column is in date format if necessary
-    repo_star_history = star_history.filter(pl.col('Repository') == repo)
+def interpolate_stars(row, star_history):
+    repo = row['repo']
+    timestamp_date = row['timestamp']
     
-    # Find the dates before and after the comment's date
-    before = repo_star_history.filter(pl.col('Date').dt.date() <= timestamp_date).sort('Date', descending=True).limit(1)
-    after = repo_star_history.filter(pl.col('Date').dt.date() >= timestamp_date).sort('Date').limit(1)
+    repo_star_history = star_history[star_history['Repository'] == repo]
 
-    if not before.is_empty() and not after.is_empty():
-        # Extracting the first row as a dictionary and then get the values
-        time_before, stars_before = before.select(['Date', 'Stars']).to_dicts()[0].values()
-        time_after, stars_after = after.select(['Date', 'Stars']).to_dicts()[0].values()
+    before = repo_star_history[repo_star_history['Date'] <= timestamp_date].sort_values('Date', ascending=False).head(1)
+    after = repo_star_history[repo_star_history['Date'] >= timestamp_date].sort_values('Date').head(1)
 
-        # Assuming time_before and time_after are datetime.date objects
+    if not before.empty and not after.empty:
+        # Ensure we only select the 'Date' and 'Stars' columns before unpacking
+        time_before, stars_before = before[['Date', 'Stars']].iloc[0]
+        time_after, stars_after = after[['Date', 'Stars']].iloc[0]
+
         total_days_diff = (time_after - time_before).days
         days_diff = (timestamp_date - time_before).days
 
@@ -83,24 +61,12 @@ def interpolate_stars(repo, timestamp_date, star_history):
 
         return interpolated_stars
     else:
-        closest = before if not before.is_empty() else after
-        return closest.select('Stars').to_series()[0] if not closest.is_empty() else None
+        closest = before if not before.empty else after
+        return closest['Stars'].iloc[0] if not closest.empty else None
 
-repo_index = all_data.get_column_index('repo')
-timestamp_index = all_data.get_column_index('timestamp')
-# In your main script, where you map over all_data
-all_data_with_stars = all_data.map_rows(
-    lambda row: interpolate_stars(
-        row[repo_index], 
-        row[timestamp_index].date(),  # Directly use .date() here
-        star_history_df
-    )
-)
+print(f'Interpolating stars. Total rows: {len(all_data)}')
+# Apply the interpolation function row-wise
+all_data['interpolated_stars'] = all_data.apply(lambda row: interpolate_stars(row, star_history_df), axis=1)
 
-
-
-# Now use these indices in map_rows
-all_data_with_stars = all_data.map_rows(lambda row: interpolate_stars(row[repo_index], row[timestamp_index], star_history_df))
-
-# Save the combined dataset to a CSV file
-all_data_with_stars.write_csv("combined_dataset_with_stars.csv")
+print("Saving to CSV...")
+all_data.to_csv("combined_dataset_with_stars.csv", index=False)
