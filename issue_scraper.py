@@ -9,24 +9,27 @@ load_dotenv()
 
 REPOS_TO_SCRAPE = [
     # smaller repos
-    ('joshmoody24', 'sitcom-simulator'),    # Sitcom Simulator
-    ('nodejs', 'nodejs.org'),               # Node.js website
-    ('spacejam', 'sled'),                   # Sled
-    ('Auto1111SDK', 'Auto1111SDK'),         # Auto1111SDK
-    ('stitionai', 'devika'),                # Devika (new project)
+    ('joshmoody24', 'sitcom-simulator'),
+    ('nodejs', 'nodejs.org'),
+    ('spacejam', 'sled'),
+    ('Auto1111SDK', 'Auto1111SDK'),
+    ('stitionai', 'devika'),
+    ('zzzprojects', 'System.Linq.Dynamic.Core'),
 
     # larger repos
-    ('hotwired', 'turbo'),                  # Turbo 8
-    ('vuejs', 'core'),                      # Vue
-    ('Zulko', 'moviepy'),                   # MoviePy
-    ('microsoft', 'dotnet'),                # .NET
-    ('withastro', 'astro'),                 # Astro
-    ('bigskysoftware', 'htmx'),             # htmx
-    ('phoenixframework', 'phoenix'),        # Phoenix
-    ('ethereum', 'go-ethereum'),            # Ethereum
-    # ('godotengine', 'godot'),             # Godot (too large)
-    # ('blender', 'blender'),               # Blender (doesn't have issues)
-    # ('django', 'django'),                 # Django (doesn't have issues)
+    ('pallets', 'flask'),
+    ('facebook', 'react'),
+    ('hotwired', 'turbo'),
+    ('rails', 'rails'),
+    ('vuejs', 'core'),
+    ('Zulko', 'moviepy'),
+    ('withastro', 'astro'),
+    ('bigskysoftware', 'htmx'),
+    ('phoenixframework', 'phoenix'),
+    ('ethereum', 'go-ethereum'),
+    ('twbs', 'bootstrap'),
+    ('django', 'django'),
+    ('microsoft', 'vscode'),
 ]
 
 PAGE_SIZE = 100
@@ -110,15 +113,16 @@ def extract_text_from_repo_issues(repo_owner, repo_name):
     if not os.path.exists('./data'):
         os.makedirs('./data')
     import csv
-    with open(f'./data/{repo_name}_issues.csv', 'w', newline='', encoding='utf-8') as f:
+    with open(f'./data/{repo_owner}_{repo_name}_issues.csv', 'w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=['timestamp', 'type', 'status', 'text', 'issue_id'])
         writer.writeheader()
         writer.writerows(issue_rows)
 
-for repo_owner, repo_name in REPOS_TO_SCRAPE:
-    try:
-        extract_text_from_repo_issues(repo_owner, repo_name)
-    except Exception as e:
-        print(f'Error scraping {repo_name}: {e}')
-        import traceback
-        traceback.print_exc()
+if __name__ == '__main__':
+    for repo_owner, repo_name in REPOS_TO_SCRAPE:
+        try:
+            extract_text_from_repo_issues(repo_owner, repo_name)
+        except Exception as e:
+            print(f'Error scraping {repo_name}: {e}')
+            import traceback
+            traceback.print_exc()
