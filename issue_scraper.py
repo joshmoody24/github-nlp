@@ -22,7 +22,7 @@ REPOS_TO_SCRAPE = [
     ('facebook', 'react'),
     ('hotwired', 'turbo'),
     ('rails', 'rails'),
-    ('vuejs', 'core'),
+    ('vuejs', 'core'), #
     ('Zulko', 'moviepy'),
     ('withastro', 'astro'),
     ('bigskysoftware', 'htmx'),
@@ -30,7 +30,7 @@ REPOS_TO_SCRAPE = [
     ('ethereum', 'go-ethereum'),
     ('twbs', 'bootstrap'),
     ('django', 'django'),
-    ('microsoft', 'vscode'),
+    # ('microsoft', 'vscode'), # too large
 ]
 
 PAGE_SIZE = 100
@@ -120,7 +120,7 @@ def extract_text_from_repo_issues(repo_owner, repo_name):
         writer.writerows(issue_rows)
 
 if __name__ == '__main__':
-    for repo_owner, repo_name in REPOS_TO_SCRAPE:
+    for repo_owner, repo_name in REPOS_TO_SCRAPE[-1:]:
         try:
             extract_text_from_repo_issues(repo_owner, repo_name)
         except Exception as e:
