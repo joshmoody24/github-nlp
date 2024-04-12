@@ -1,0 +1,178 @@
+Total rows 452
+Model for next_star_count_end
+R-squared: 0.2129
+Adjusted R-squared: 0.1783
+Significant Coefficients:
+code_comment_deprecated_ratio: 6359.9076 (p-value: 0.0007)
+code_comment_explanation_ratio: 14127.8709 (p-value: 0.0)
+code_comment_future work_ratio: 7050.3998 (p-value: 0.0002)
+issue_comment_bug report_ratio: 4696.279 (p-value: 0.0187)
+issue_comment_conclusion_ratio: 3924.7871 (p-value: 0.0423)
+issue_comment_discussion_ratio: 7750.438 (p-value: 0.0001)
+issue_comment_question_ratio: 11420.0423 (p-value: 0.0)
+
+Model for next_star_count_start
+R-squared: 0.208
+Adjusted R-squared: 0.1731
+Significant Coefficients:
+code_comment_deprecated_ratio: 6165.1463 (p-value: 0.0008)
+code_comment_explanation_ratio: 13620.1788 (p-value: 0.0)
+code_comment_future work_ratio: 6676.1897 (p-value: 0.0003)
+issue_comment_bug report_ratio: 4441.4805 (p-value: 0.0228)
+issue_comment_conclusion_ratio: 3827.0528 (p-value: 0.0427)
+issue_comment_discussion_ratio: 7419.9319 (p-value: 0.0002)
+issue_comment_question_ratio: 11035.4617 (p-value: 0.0)
+
+Model for next_code_comment_count_growth_rate
+R-squared: 0.1491
+Adjusted R-squared: 0.1117
+Significant Coefficients:
+code_comment_explanation_count_growth_rate: -0.5189 (p-value: 0.0)
+
+Model for next_code_comment_deprecated_count_growth_rate
+R-squared: 0.1018
+Adjusted R-squared: 0.0623
+Significant Coefficients:
+code_comment_deprecated_count_growth_rate: -0.1627 (p-value: 0.0)
+code_comment_future work_ratio: -0.1082 (p-value: 0.0006)
+issue_comment_conclusion_count_growth_rate: -0.0662 (p-value: 0.0421)
+
+Model for next_code_comment_explanation_count_growth_rate
+R-squared: 0.1693
+Adjusted R-squared: 0.1328
+Significant Coefficients:
+code_comment_explanation_count_growth_rate: -0.5603 (p-value: 0.0)
+
+Model for next_code_comment_future work_count_growth_rate
+R-squared: 0.0739
+Adjusted R-squared: 0.0331
+Significant Coefficients:
+code_comment_future work_count_growth_rate: -0.1806 (p-value: 0.0002)
+
+Model for next_issue_comment_bug report_count_growth_rate
+R-squared: 0.1568
+Adjusted R-squared: 0.1197
+Significant Coefficients:
+code_comment_future work_ratio: 0.0363 (p-value: 0.0342)
+issue_comment_bug report_count_growth_rate: -0.1223 (p-value: 0.0)
+
+Model for next_issue_comment_conclusion_count_growth_rate
+R-squared: 0.1969
+Adjusted R-squared: 0.1616
+Significant Coefficients:
+code_comment_future work_count_growth_rate: -0.048 (p-value: 0.0464)
+issue_comment_conclusion_count_growth_rate: -0.183 (p-value: 0.0)
+issue_comment_feature request_count_growth_rate: 0.0457 (p-value: 0.0468)
+issue_comment_question_count_growth_rate: 0.0733 (p-value: 0.0028)
+
+Model for next_issue_comment_count_growth_rate
+R-squared: 0.1077
+Adjusted R-squared: 0.0684
+Significant Coefficients:
+issue_comment_question_count_growth_rate: -0.13 (p-value: 0.0001)
+issue_comment_solution_count_growth_rate: -0.0916 (p-value: 0.0029)
+issue_comment_solution_ratio: 0.065 (p-value: 0.028)
+
+Model for next_issue_comment_discussion_count_growth_rate
+R-squared: 0.1936
+Adjusted R-squared: 0.1581
+Significant Coefficients:
+issue_comment_conclusion_ratio: 0.0564 (p-value: 0.0355)
+issue_comment_discussion_count_growth_rate: -0.1855 (p-value: 0.0)
+issue_comment_solution_count_growth_rate: -0.1148 (p-value: 0.0)
+
+Model for next_issue_comment_feature request_count_growth_rate
+R-squared: 0.1323
+Adjusted R-squared: 0.0942
+Significant Coefficients:
+issue_comment_feature request_count_growth_rate: -0.1564 (p-value: 0.0)
+
+Model for next_issue_comment_question_count_growth_rate
+R-squared: 0.1959
+Adjusted R-squared: 0.1606
+Significant Coefficients:
+issue_comment_question_count_growth_rate: -0.2465 (p-value: 0.0)
+issue_comment_solution_count_growth_rate: -0.0811 (p-value: 0.0081)
+issue_comment_solution_ratio: 0.0612 (p-value: 0.0376)
+
+Model for next_issue_comment_solution_count_growth_rate
+R-squared: 0.208
+Adjusted R-squared: 0.1732
+Significant Coefficients:
+issue_comment_conclusion_count_growth_rate: 0.065 (p-value: 0.0017)
+issue_comment_question_count_growth_rate: 0.0677 (p-value: 0.0026)
+issue_comment_solution_count_growth_rate: -0.1752 (p-value: 0.0)
+
+Model for next_star_growth_rate
+R-squared: 0.0379
+Adjusted R-squared: -0.0044
+Significant Coefficients:
+code_comment_future work_ratio: 0.0121 (p-value: 0.0382)
+issue_comment_question_ratio: -0.0153 (p-value: 0.0204)
+
+Model for next_code_comment_deprecated_ratio
+R-squared: 0.0089
+Adjusted R-squared: -0.0113
+Significant Coefficients:
+(no significant coefficients found)
+
+Model for next_code_comment_explanation_ratio
+R-squared: 0.0127
+Adjusted R-squared: -0.0074
+Significant Coefficients:
+(no significant coefficients found)
+
+Model for next_code_comment_future work_ratio
+R-squared: 0.0165
+Adjusted R-squared: -0.0036
+Significant Coefficients:
+issue_comment_bug report_count_growth_rate: -0.0126 (p-value: 0.0465)
+
+Model for next_issue_comment_bug report_ratio
+R-squared: 0.0215
+Adjusted R-squared: 0.0016
+Significant Coefficients:
+(no significant coefficients found)
+
+Model for next_issue_comment_conclusion_ratio
+R-squared: 0.0106
+Adjusted R-squared: -0.0095
+Significant Coefficients:
+(no significant coefficients found)
+
+Model for next_issue_comment_discussion_ratio
+R-squared: 0.0025
+Adjusted R-squared: -0.0179
+Significant Coefficients:
+(no significant coefficients found)
+
+Model for next_issue_comment_feature request_ratio
+R-squared: 0.0167
+Adjusted R-squared: -0.0034
+Significant Coefficients:
+(no significant coefficients found)
+
+Model for next_issue_comment_question_ratio
+R-squared: 0.0074
+Adjusted R-squared: -0.0128
+Significant Coefficients:
+(no significant coefficients found)
+
+Model for next_issue_comment_solution_ratio
+R-squared: 0.0087
+Adjusted R-squared: -0.0115
+Significant Coefficients:
+(no significant coefficients found)
+
+Model for next_positivity_ratio
+R-squared: 0.0085
+Adjusted R-squared: -0.0117
+Significant Coefficients:
+(no significant coefficients found)
+
+Model for star_growth_rate
+R-squared: 0.0312
+Adjusted R-squared: -0.0114
+Significant Coefficients:
+issue_comment_question_ratio: -0.0213 (p-value: 0.048)
+

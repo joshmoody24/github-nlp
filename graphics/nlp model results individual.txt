@@ -1,0 +1,33 @@
+                                   OLS Regression Results                                   
+============================================================================================
+Dep. Variable:     future_stars_3_month_growth_rate   R-squared:                       0.066
+Model:                                          OLS   Adj. R-squared:                  0.066
+Method:                               Least Squares   F-statistic:                     189.6
+Date:                              Thu, 11 Apr 2024   Prob (F-statistic):               0.00
+Time:                                      14:38:31   Log-Likelihood:                -15186.
+No. Observations:                             24155   AIC:                         3.039e+04
+Df Residuals:                                 24145   BIC:                         3.047e+04
+Df Model:                                         9                                         
+Covariance Type:                          nonrobust                                         
+============================================================================================
+                               coef    std err          t      P>|t|      [0.025      0.975]
+--------------------------------------------------------------------------------------------
+const                        0.4570      0.004    109.398      0.000       0.449       0.465
+sentiment_class_POSITIVE    -0.0123      0.008     -1.618      0.106      -0.027       0.003
+purpose_bug report          -0.2465      0.028     -8.878      0.000      -0.301      -0.192
+purpose_conclusion          -0.2500      0.020    -12.672      0.000      -0.289      -0.211
+purpose_deprecated          -0.1056      0.018     -5.712      0.000      -0.142      -0.069
+purpose_discussion          -0.2561      0.011    -22.666      0.000      -0.278      -0.234
+purpose_feature request     -0.2423      0.016    -15.048      0.000      -0.274      -0.211
+purpose_future work         -0.0074      0.014     -0.541      0.589      -0.034       0.019
+purpose_question            -0.2558      0.008    -33.408      0.000      -0.271      -0.241
+purpose_solution            -0.2249      0.018    -12.794      0.000      -0.259      -0.190
+==============================================================================
+Omnibus:                    19938.916   Durbin-Watson:                   1.289
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):           526475.949
+Skew:                           3.924   Prob(JB):                         0.00
+Kurtosis:                      24.483   Cond. No.                         9.99
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.

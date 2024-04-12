@@ -1,0 +1,135 @@
+CODE COMMENTS
+
+Top 20 Unigrams:
+use: 512
+object: 472
+function: 471
+value: 460
+set: 440
+return: 433
+string: 412
+used: 409
+type: 403
+param: 350
+test: 328
+check: 303
+error: 300
+element: 291
+default: 288
+don: 279
+file: 278
+need: 278
+event: 273
+code: 258
+
+Top 20 Bigrams:
+make sure: 90
+github com: 57
+license bsd: 56
+copyright 2010: 40
+return value: 39
+code point: 37
+param string: 35
+2010 pallets: 35
+meth flask: 30
+bsd license: 29
+license details: 29
+pallets license: 28
+bsd clause: 28
+user defined: 27
+set true: 27
+nodejs org: 27
+looks localized: 27
+localized string: 27
+string similar: 27
+protoc_insertion_point class_scope: 26
+
+Top 20 Trigrams:
+copyright 2010 pallets: 35
+license bsd license: 28
+bsd license details: 28
+2010 pallets license: 28
+pallets license bsd: 28
+license bsd clause: 28
+looks localized string: 27
+localized string similar: 27
+protoc_insertion_point class_scope gooseai: 26
+nodejs org dist: 23
+like meth flask: 23
+https github com: 20
+armin ronacher license: 20
+ronacher license bsd: 20
+org dist version: 17
+dist version node: 17
+version node version: 16
+spec whatwg org: 15
+github com bootstrap: 14
+com bootstrap javascript: 14
+
+ISSUE COMMENTS
+
+Top 20 Unigrams:
+issue: 1721
+like: 1095
+think: 1076
+use: 1013
+just: 1008
+https: 793
+work: 788
+pr: 771
+don: 754
+using: 750
+thanks: 732
+need: 721
+code: 666
+react: 625
+way: 615
+problem: 593
+com: 593
+case: 578
+github: 555
+time: 554
+
+Top 20 Bigrams:
+github com: 487
+https github: 462
+don think: 145
+looks like: 133
+use case: 131
+let know: 101
+don know: 88
+makes sense: 87
+com rails: 83
+rails rails: 82
+pull request: 81
+make sense: 68
+breaking change: 60
+feel free: 57
+don want: 56
+rails pull: 55
+facebook react: 49
+ll try: 48
+doesn work: 48
+test case: 48
+
+Top 20 Trigrams:
+https github com: 462
+github com rails: 83
+com rails rails: 81
+rails rails pull: 54
+github com facebook: 48
+com facebook react: 48
+github com hotwired: 43
+github com vuejs: 42
+com hotwired turbo: 41
+github com ethereum: 36
+com ethereum ethereum: 32
+https codepen io: 30
+github com twbs: 29
+pr https github: 28
+com twbs bootstrap: 28
+hotwired turbo pull: 26
+com vuejs core: 26
+facebook react issues: 25
+https gist github: 22
+gist github com: 22
